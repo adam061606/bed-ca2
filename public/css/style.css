@@ -1,0 +1,35 @@
+*{
+    font-family: sans-serif;
+}
+body{
+    background-color: #f1d1b5;
+}
+.coin{
+    max-width: 20px;
+    margin-right: 5px;
+}
+
+.right{
+    float:right;
+}
+.left{
+    float:left;
+}
+
+.border{
+    outline-style: solid 1px;
+    color:grey;
+    border-radius: 3px;
+}
+.center{
+    align-items: center;
+}
+
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+}
