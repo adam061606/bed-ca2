@@ -1,4 +1,3 @@
-const { dash } = require('pdfkit');
 const pool = require('../services/db');
 
 // check that they got the same play type

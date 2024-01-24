@@ -33,7 +33,8 @@ module.exports.checkUserID = (req,res,next) => {
 module.exports.createNewUser = (req,res,next) => {
     const data = {
         username: req.body.username,
-        email: req.body.email
+        email: req.body.email,
+        password: res.locals.hash
     }
     const callback = (error, results, fields) => {
         if (error) {
@@ -232,7 +233,7 @@ module.exports.readUserByUsername = (req, res, next) =>
 module.exports.login = (req, res, next) => {
     if (req.body.username == undefined || req.body.password == undefined || req.body.username.trim()==""){ // check if res body is filled 
         res.status(400).json({
-            message: "Error: name or username or email is undefined"
+            message: "Error: username or email is undefined"
         });
         return;
     }
@@ -274,10 +275,11 @@ module.exports.register = (req, res, next) => {
         }
         else {
             res.locals.message = `User ${res.locals.username} created successfully.`
+            res.locals.userId = results[1][0].user_id
             next()
         }
     }
-    model.insertSingleUser(data,callback)
+    model.createUser(data,callback)
 }
 
 //////////////////////////////////////////////////////
@@ -286,14 +288,14 @@ module.exports.register = (req, res, next) => {
 module.exports.checkUsernameOrEmailExist = (req, res, next) => {
     if (req.body.username == undefined || req.body.email == undefined || req.body.username.trim()=="" || req.body.email.trim()==""){ // check if res body is filled 
         res.status(400).json({
-            message: "Error: name or username or email is undefined"
+            message: "Error: username or email is undefined"
         });
         return;
     }
     const data = {
         username: req.body.username,
-        email: req.body.email
-        // password: req.body.password
+        email: req.body.email,
+        password: req.body.password
     }
     const callback = (error, results, fields) => {
         if (error){

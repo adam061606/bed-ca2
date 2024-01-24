@@ -42,6 +42,7 @@ module.exports.hashPassword = (req, res, next) => {
         res.status(500).json(err);
       } else {
         res.locals.hash = hash;
+        console.log(res.locals.hash)
         next();
       }
     };

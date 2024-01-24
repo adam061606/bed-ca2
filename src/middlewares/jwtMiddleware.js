@@ -24,7 +24,9 @@ module.exports.generateToken = (req, res, next) => {
       userId: res.locals.userId,
       timestamp: new Date()
     };
-  
+    
+    console.log('payload:',payload)
+
     const options = {
       algorithm: tokenAlgorithm,
       expiresIn: tokenDuration,

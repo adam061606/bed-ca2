@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   <p class="card-text">
                       Level: ${player.level}
                   </p>
-                  <a href="singlePlayerInfo.html?player_id=${player.id}" class="btn btn-primary">View Details</a>
+                  <a href="getSinglePlayerInfo.html?player_id=${player.id}" class="btn btn-primary">View Details</a>
               </div>
           </div>
           `;

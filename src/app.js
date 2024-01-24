@@ -24,6 +24,7 @@ app.use("/api", mainRoutes);
 // SETUP STATIC FILES
 //////////////////////////////////////////////////////
 app.use("/", express.static('public'));
+app.use("/", express.static('public/html'));
 
 //////////////////////////////////////////////////////
 // EXPORT APP

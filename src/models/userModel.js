@@ -4,13 +4,13 @@ const pool = require('../services/db');
 module.exports.createUser = (data, callback) =>
 {
     const SQLSTATMENT = `
-    INSERT INTO User (username, email)
-    VALUES (?, ?);
+    INSERT INTO User (username, email, password)
+    VALUES (?, ?, ?);
 
     SELECT * FROM User 
     WHERE user_id = LAST_INSERT_ID();
     `;
-    const VALUES = [data.username, data.email];
+    const VALUES = [data.username, data.email, data.password];
 
     pool.query(SQLSTATMENT, VALUES, callback);
 }

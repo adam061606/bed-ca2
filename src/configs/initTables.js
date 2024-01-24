@@ -29,7 +29,8 @@ CREATE TABLE Messages (
 CREATE TABLE User (
 user_id INT PRIMARY KEY AUTO_INCREMENT,
 username TEXT,
-email TEXT
+email TEXT,
+password TEXT
 );
 
 CREATE TABLE Task (
@@ -118,13 +119,13 @@ INSERT INTO Player (name, level, PlayType, partner, specialty, racket, shoe, shi
 ('andrew', 4, 'double', 2, 'net', 'jetspeed12', 'aks 99', 'red shirt', 'red pants'),
 ('asher', 9, 'single', NULL, 'lob', '99 pro', '65z', 'red shirt', 'red pants'),
 ('alex', 1, 'single', NULL, 'lift', '99 pro', 'aks 99', 'pika', 'reddisher')
-
 ;
 
-LOAD DATA INFILE '../csv/userCharRel.csv'
-INTO TABLE userCharRel
-FIELDS TERMINATED BY ','
-IGNORE 1 ROWS;
+INSERT INTO UserCharRel (user_id, player_id) VALUES
+(1,1),
+(2,2),
+(2,3)
+;
 
 INSERT INTO Messages (message_text, user_id) VALUES
 ("Hello world!", 1),
