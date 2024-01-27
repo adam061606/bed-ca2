@@ -3,7 +3,7 @@ const model = require("../models/taskProgressModal");
 // check user and task id exist or not
 module.exports.checkUserTaskId = (req,res,next) => {
     const data = {
-        user_id: req.body.user_id,
+        user_id: res.locals.user_id,
         task_id: req.body.task_id,
     }
     const callback = (error, results, fields) => {

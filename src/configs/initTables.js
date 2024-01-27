@@ -54,7 +54,8 @@ CREATE TABLE Shop (
   type ENUM ('racket', 'shoe', 'shirt', 'pants') NOT NULL,
   name TEXT NOT NULL,
   atk INT DEFAULT 0 NOT NULL,
-  def INT DEFAULT 0 NOT NULL
+  def INT DEFAULT 0 NOT NULL,
+  price INT DEFAULT 0 NOT NULL
   );
 
 CREATE TABLE Player (
@@ -97,20 +98,20 @@ INSERT INTO Task (title, description, points) VALUES
 
 
 
-INSERT INTO Shop (brand, type, name, atk, def) VALUES
-('Yonex', 'racket', '100zz', 80, 30),
-('Yonex', 'racket', '99 pro', 100, 50),
-('Yonex', 'shoe', '65z', 20, 70),
-('Yonex', 'shoe', 'aeroz', 10, 10),
-('Yonex', 'shirt', 'red shirt', 20, 20),
-('Yonex', 'pants', 'red pants', 20, 20),
-('Yonex', 'pants', 'highPants', 50, 50),
-('Victor', 'racket', 'jetspeed12', 90, 10),
-('Victor', 'shoe', 'aks 99', 20, 20),
-('Victor', 'shirt', 'pika', 55, 10),
-('LiNing', 'shirt', 'yellower', 50, 0),
-('LiNing', 'racket', 'axf999', 99, 99),
-('LiNing', 'pants', 'reddisher', 0, 60)
+INSERT INTO Shop (brand, type, name, atk, def, price) VALUES
+('Yonex', 'racket', '100zz', 80, 30, 20),
+('Yonex', 'racket', '99 pro', 100, 50, 25),
+('Yonex', 'shoe', '65z', 20, 70, 40),
+('Yonex', 'shoe', 'aeroz', 10, 10, 50),
+('Yonex', 'shirt', 'red shirt', 20, 20, 50),
+('Yonex', 'pants', 'red pants', 20, 20, 60),
+('Yonex', 'pants', 'highPants', 50, 50, 50),
+('Victor', 'racket', 'jetspeed12', 90, 10, 10),
+('Victor', 'shoe', 'aks 99', 20, 20, 35),
+('Victor', 'shirt', 'pika', 55, 10, 100),
+('LiNing', 'shirt', 'yellower', 50, 0, 55),
+('LiNing', 'racket', 'axf999', 99, 99, 90),
+('LiNing', 'pants', 'reddisher', 0, 60, 50)
 ;
 
 INSERT INTO Player (name, level, PlayType, partner, specialty, racket, shoe, shirt, pants) VALUES 

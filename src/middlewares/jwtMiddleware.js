@@ -78,7 +78,7 @@ module.exports.verifyToken = (req, res, next) => {
   
       res.locals.userId = decoded.userId;
       res.locals.tokenTimestamp = decoded.timestamp;
-  
+      console.log(`user_id: ${res.locals.user_id}`)
       next();
     };
   

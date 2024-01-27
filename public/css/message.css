@@ -70,9 +70,11 @@ html, body {
     border-top-left-radius:5px;
     border-top-right-radius:5px; 
     color:white;
+    justify-content: center;
+    align-items:center;
     text-align:center;
     font-size:20px;
-    padding-top:17px;
+    padding-top:19px;
   }
   .chat-box-body {
     position: relative;  

@@ -17,14 +17,12 @@
     <link href="../css/style.css" rel="stylesheet"/>
     <link href="../css/message.css" rel="stylesheet">
     <link href="../css/taskCard.css" rel="stylesheet">
-    <!-- <link href="../css/swiper-bundle.min.css" rel="stylesheet"> -->
 
     <title>Home</title>
   </head>
   
   <script src="../js/queryCmds.js" type="text/javascript"></script>
   <script src="../js/userNavbarToggle.js" type="text/javascript"></script>
-  <script src="../js/taskCards.js" type="text/javascript"></script>
 
   
   <body>
@@ -99,7 +97,42 @@
     </nav>
     <main class="py-4">
       <div class="container">
-        <h2>Tasks</h2>
+        <div class="d-flex">
+          <h2 class="m-3">Tasks</h2>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-whatever="@getbootstrap">Create New Task</button>
+          
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Create New Task</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="mb-3">
+                      <label for="task-name" class="col-form-label">Title:</label>
+                      <input type="text" class="form-control" id="title" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="Description-text" class="col-form-label">Description:</label>
+                      <textarea class="form-control" id="Description-text" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                      <label for="task-name" class="col-form-label">Number of points:</label>
+                      <input type="number" class="form-control" id="points" required>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" id="taskSubmitButton" class="btn btn-success">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>     
+        </div>
+        <!-- https://gosnippets.com/snippets/scrolling-card-ui-with-flexbox -->
         <ul class="cards" id="taskList">
             <!-- <div id="taskList" class='row'></div> -->
         </ul>
@@ -156,9 +189,7 @@
   <script src="../js/queryCmds.js" type="text/javascript"></script>
   <script src="../js/getCurrentURL.js" type="text/javascript"></script>
   <script src="../js/showAllTasks.js" type="text/javascript"></script>
-  <script src="../js/taskCards.js"  type="text/javascript"></script>
   <script src="../js/message.js" type="text/javascript"></script>
-  <!-- <script src="../js/swiper-bundle.min.js"></script> -->
     <!-- ADD JAVASCRIPTS BEFORE BODY ENDTAG -->
   </body>
 </html>
