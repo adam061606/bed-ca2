@@ -1,6 +1,8 @@
+document.addEventListener("DOMContentLoaded", function () {
 url = new URL(document.URL);
 const urlParams = url.searchParams;
 const userId = urlParams.get("user_id");
+// const userId = res.locals.userId;
 
 const callbackForUserInfo = (responseStatus, responseData) => {
   console.log("responseStatus:", responseStatus);
@@ -17,12 +19,9 @@ const callbackForUserInfo = (responseStatus, responseData) => {
         <div class="card">
             <div class="card-body">
                 <p class="card-text">
-                    User ID: ${responseData.id} <br>
+                    User ID: ${responseData.user_id} <br>
                     Username: ${responseData.username} <br>
                     Email: ${responseData.email} <br>
-                    Created On: ${responseData.created_on} <br>
-                    Updated On: ${responseData.updated_on} <br>
-                    Last Login On: ${responseData.last_login_on}
                 </p>
             </div>
         </div>
@@ -61,3 +60,4 @@ const callbackForUserPlayers = (responseStatus, responseData) => {
 
 fetchMethod(currentUrl + `/api/user/${userId}`, callbackForUserInfo);
 fetchMethod(currentUrl + `/api/user/${userId}/player`, callbackForUserPlayers);
+});

@@ -80,7 +80,7 @@ module.exports.getTaskProgressByUserID = (req,res,next) => {
 
 module.exports.getUsersByID = (req,res,next) => {
     const data ={
-        id: req.params.user_id,
+        id: req.locals.userId,
         task_id: res.locals.taskID
     }
     const callback = (error, results, fields) => {
@@ -242,13 +242,13 @@ module.exports.login = (req, res, next) => {
     }
     const callback = (error, results, fields) => {
         if (error){
-            console.log("Error checkUsernameAndEmail",error)
+            console.log("Error login",error)
             res.status(500).json(error)
         } else if (results.length==0){
             res.status(404).json({message: "User not found"})
         }
         else {
-            res.locals.userId = results[0].id
+            res.locals.userId = results[0].user_id
             res.locals.hash = results[0].password
             res.locals.username = results[0].username
             next()
