@@ -31,13 +31,12 @@ module.exports.checkTaskProgressID = (data, callback) =>
 module.exports.createTaskProgress = (data, callback) =>
 {
     const SQLSTATMENT = `
-    INSERT INTO TaskProgress (user_id, task_id, completion_date, notes)
-    VALUES (?, ?, ?, ?);
-
-    SELECT progress_id, user_id, task_id, DATE(completion_date) AS completion_date, notes FROM TaskProgress 
-    WHERE progress_id = LAST_INSERT_ID();
+    INSERT INTO TaskProgress (user_id, task_id, notes)
+    VALUES (?, ?, ?);
+    SELECT progress_id, user_id, task_id, DATE_FORMAT(completion_date, '%Y-%m-%d') as completion_date, notes
+    FROM TaskProgress WHERE progress_id = LAST_INSERT_ID();
     `;
-    const VALUES = [data.user_id, data.task_id, data.completion_date, data.notes];
+    const VALUES = [data.user_id, data.task_id, data.notes];
 
     pool.query(SQLSTATMENT, VALUES, callback);
 }

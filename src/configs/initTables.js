@@ -42,9 +42,9 @@ points INT
 
 CREATE TABLE TaskProgress (
 progress_id INT PRIMARY KEY AUTO_INCREMENT,
-user_id INT NOT NULL,
-task_id INT NOT NULL,
-completion_date TIMESTAMP,
+user_id INT,
+task_id INT,
+completion_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 notes TEXT
 );
 

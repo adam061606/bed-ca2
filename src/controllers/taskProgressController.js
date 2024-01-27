@@ -3,7 +3,7 @@ const model = require("../models/taskProgressModal");
 // check user and task id exist or not
 module.exports.checkUserTaskId = (req,res,next) => {
     const data = {
-        user_id: res.locals.user_id,
+        user_id: res.locals.userId,
         task_id: req.body.task_id,
     }
     const callback = (error, results, fields) => {
@@ -50,14 +50,9 @@ module.exports.checkTaskProgressID = (req,res,next) => {
 
 // task 11, create (POST) new task Progress
 module.exports.createNewTaskProgress = (req,res,next) => {
-    if (req.body.completion_date == undefined || req.body.completion_date.trim() == ""){
-        res.status(400).json({message: "Missing completion_date"});
-        return;
-    }
     const data = {
-        user_id: req.body.user_id,
+        user_id: res.locals.userId,
         task_id: req.body.task_id,
-        completion_date: req.body.completion_date,
         notes: req.body.notes
     }
     const callback = (error, results, fields) => {
