@@ -10,7 +10,7 @@ const callbackForUserInfo = (responseStatus, responseData) => {
 
   const userInfo = document.getElementById("userInfo");
 
-  if (responseStatus == 404) {
+  if (responseStatus == 404 || responseStatus == 400) {
     userInfo.innerHTML = `${responseData.message}`;
     return;
   }

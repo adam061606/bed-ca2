@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
       const playerInfo = document.getElementById("playerInfo");
   
-      if (responseStatus == 404) {
+      if (responseStatus == 404 || responseStatus == 400) {
         playerInfo.innerHTML = `${responseData.message}`;
         return;
       }

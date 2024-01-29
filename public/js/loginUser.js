@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
   
       const username = document.getElementById("username").value;
       const password = document.getElementById("password").value;
+
+      console.log(`username: ${username},  password: ${password}`);
   
       const data = {
         username: username,
