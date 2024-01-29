@@ -7,6 +7,7 @@ const shopRoutes = require('./shopRoutes');
 const playerRoutes = require('./playerRoutes');
 const courtRoutes = require('./courtRoutes');
 const userCharRelRoutes = require('./userCharRelRoutes');
+const messageRoutes = require('./messageRoutes');
 const exampleController = require('../controllers/exampleController');
 const jwtMiddleware = require('../middlewares/jwtMiddleware');
 const bcryptMiddleware = require('../middlewares/bcryptMiddleware');
@@ -24,6 +25,9 @@ router.use("/shop", shopRoutes);
 router.use("/player", playerRoutes);
 router.use("/court", courtRoutes); 
 router.use("/userCharRel", userCharRelRoutes); 
+
+router.use("/messages", messageRoutes); 
+
 
 // tokens
 router.post("/jwt/generate", exampleController.preTokenGenerate, jwtMiddleware.generateToken, exampleController.beforeSendToken, jwtMiddleware.sendToken);

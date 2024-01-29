@@ -4,6 +4,10 @@
 body{
     background-color: #f1d1b5;
 }
+main {
+    min-height: 100vh;
+}
+
 .coin{
     max-width: 20px;
     margin-right: 5px;
@@ -26,14 +30,22 @@ body{
 }
 
 footer{
-    position: fixed;
+    /* position: fixed;
     left: 0;
     bottom: 0;
-    width: 100%;
+    width: 100%; */
     color: white;
     text-align: center;
 }
 
 .logo{
     height: 48px;
+}
+
+.dropend .dropdown-toggle::after {
+    display: none;
+}
+
+.messageText{
+    width: fit-content;
 }

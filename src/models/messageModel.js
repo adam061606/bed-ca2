@@ -3,7 +3,8 @@ const pool = require('../services/db');
 module.exports.selectAll = (callback) =>
 {
     const SQLSTATMENT = `
-    SELECT * FROM Messages;
+    SELECT * from Messages 
+    INNER JOIN user ON user.user_id = Messages.user_id;
     `;
 
     pool.query(SQLSTATMENT, callback);
