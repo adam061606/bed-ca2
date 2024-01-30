@@ -1,4 +1,108 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+  const playerList = document.getElementById("navbar");
+  const displayItem = document.createElement("div");
+  displayItem.className =
+    "container";
+  displayItem.innerHTML = `
+  <a class="navbar-brand" href="index.html"
+  ><img src='../graphics/heart.png'
+    class="logo"
+/></a>
+<button
+  class="navbar-toggler"
+  type="button"
+  data-bs-toggle="collapse"
+  data-bs-target="#navbarNav"
+  aria-controls="navbarNav"
+  aria-expanded="false"
+  aria-label="Toggle navigation"
+>
+  <span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNav">
+  <!-- me-auto: margin-right: auto -->
+  <ul class="navbar-nav me-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="index.html">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="player.html">Players</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="shop.html">Shop</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="task.html">Task</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="court.html">Court</a>
+    </li>
+  </ul>
+</div>
+<div class="collapse navbar-collapse" id="navbarNav">
+  <ul class="navbar-nav ms-auto">
+    <li class="nav-item border d-flex center rounded-corners" id="pointBox">
+      <p id="pointLabel" class="m-1">10000</p>
+      <a href="" class="">
+        <img class="coin right" src="https://pngimg.com/uploads/coin/coin_PNG36871.png" alt="Coin PNG image" title="Coin PNG image">
+      </a>
+    </li>
+    <li class="nav-item">
+      <a id="profileButton" href="profile.html" class="nav-link">Profile</a>
+    </li>
+    <li class="nav-item">
+      <a id="logoutButton" href="#" class="nav-link">Logout</a>
+    </li>
+    <li class="nav-item">
+      <a id="loginButton" href="login.html" class="nav-link">Login</a>
+    </li>
+    <li>
+      <div class="btn-nav">
+        <a id="registerButton" class="btn text-bg-dark btn-small navbar-btn" href="register.html"
+          >Register!</a
+        >
+      </div>
+    </li>
+  </ul>
+</div>
+
+
+<!--  https://codepen.io/shivapandey/pen/dWdRYM -->
+<div id="body z-1"> 
+<div id="chat-circle" class="btn btn-raised">
+  <div id="chat-overlay"></div>
+  <i class="fa-regular fa-comments"></i>	    
+</div>
+<div class="chat-box z-1">
+  <div class="chat-box-header">
+    Public Chat
+    <span class="chat-box-toggle"><i class="fa-solid fa-xmark"></i></span>
+  </div>
+  <div class="chat-box-body">
+    <div class="chat-box-overlay">   
+    </div>
+    <div class="chat-logs z-1">
+ 
+    </div><!--chat-log -->
+  </div>
+  <div class="chat-input">      
+    <form id="chat-form" class="d-flex">
+      <input type="text" class="w-75 text-break px-3 border-0 " id="message" placeholder="Send a message..."/>
+      <button type="submit" class="w-25 btn" id="chat-submit"><i class="fa-solid fa-turn-up"></i></button>
+    </form>      
+  </div>
+</div>
+</div>
+    `;
+  playerList.appendChild(displayItem);
+
+
+
+
+
+
+
     const loginButton = document.getElementById("loginButton");
     const registerButton = document.getElementById("registerButton");
     const profileButton = document.getElementById("profileButton");
@@ -28,4 +132,5 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("token");
       window.location.href = "index.html";
     });
+
   });

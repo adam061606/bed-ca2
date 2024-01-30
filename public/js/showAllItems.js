@@ -3,12 +3,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const callback = (responseStatus, responseData) => {
       console.log("responseStatus:", responseStatus);
       console.log("responseData:", responseData);
+      randomId=[]
+      for (let i=0 ;i<3;i++){
+        a = Math.floor(Math.random() * responseData.length+1)
+        if (randomId.filter((id) => id == a).length == 0) {
+          randomId.push(a);
+        } else i--
+      }
   
-      const playerList = document.getElementById("shopList");
+      const shopList = document.getElementById("shopList");
+      shopList.innerHTML=''
+      console.log(randomId)
       responseData.forEach((item) => {
+        if (randomId.filter((id)=> id == item.id).length == 0) {
+          return
+        }
         const displayItem = document.createElement("div");
         displayItem.className =
-        "col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 p-3";
+        "col-md-4 col-sm-6 col-xs-12 p-3";
         displayItem.innerHTML = `
         <div class="card">
             <div class="card-body">
@@ -20,13 +32,24 @@ document.addEventListener("DOMContentLoaded", function () {
                     Defence: ${item.def} <br>
                     Price: ${item.price} points
                 </p>
-                <a href="" class="btn btn-primary">Buy</a>
+                <a href="#" class="btn btn-primary">Buy</a>
             </div>
         </div>
           `;
-        playerList.appendChild(displayItem);
+          shopList.appendChild(displayItem);
       });
     };
-  
+
     fetchMethod(currentUrl + "/api/shop", callback);
+
+    const gatcha = document.getElementById('gatcha')
+    gatcha.addEventListener('click',() =>{
+      console.log('successfully refreshed shop')
+      fetchMethod(currentUrl + "/api/shop", callback);
+    })
+
   });
+
+
+
+  
