@@ -7,14 +7,10 @@ module.exports.createMessage = (req, res, next) => {
         res.status(400).send("Error: message_text is undefined");
         return;
     }
-    else if(req.body.user_id == undefined)
-    {
-        res.status(400).send("Error: user_id is undefined");
-        return;
-    }
+
 
     const data = {
-        user_id: req.body.user_id,
+        user_id: res.locals.userId,
         message_text: req.body.message_text
     }
 

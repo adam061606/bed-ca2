@@ -122,10 +122,10 @@
        
           </div><!--chat-log -->
         </div>
-        <div class="chat-input col-12 ">      
-          <form>
-            <input type="text" id="message" placeholder="Send a message..."/>
-            <button type="submit" class="chat-submit" id="chat-submit"><i class="fa-solid fa-turn-up"></i></button>
+        <div class="chat-input">      
+          <form id="chat-form">
+            <input type="text" class="w-75 text-break " id="message" placeholder="Send a message..."/>
+            <button type="submit" class="chat-submit w-25" id="chat-submit"><i class="fa-solid fa-turn-up"></i></button>
           </form>      
         </div>
       </div>
@@ -133,6 +133,30 @@
 
 
     </main>
+
+
+      <div class="modal fade modal-dialog model-dialog-centered" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog model-dialog-centered">
+          <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit message</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Edit message below:</label>
+                <input type="text" class="form-control" id="updatedMessage" value="${Text.message_text}">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="submitNewMessage">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer class="mt-auto py-3 bg-dark text-center">
       <p class="m-0 py-0 px-4">
