@@ -70,11 +70,10 @@ module.exports.getUserByID = (data, callback) =>
     const SQLSTATMENT = `
     SELECT * FROM User
     WHERE user_id = ?;
-
-    SELECT IFNULL(SUM(points),0) AS total_points FROM Task
-    WHERE task_id in (?);
     `;
-    const VALUES = [data.id, data.task_id];
+    // SELECT IFNULL(SUM(points),0) AS total_points FROM Task
+    // WHERE task_id in (?);
+    const VALUES = [data.id];
 
     pool.query(SQLSTATMENT, VALUES, callback);
 }

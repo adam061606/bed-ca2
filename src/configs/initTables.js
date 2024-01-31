@@ -1,5 +1,45 @@
 const pool = require("../services/db");
 
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+
+const callback = (error, results, fields) => {
+  if (error) {
+    console.error("Error creating tables:", error);
+  } else {
+    console.log("Tables created successfully");
+  }
+  process.exit();
+}
+
+const userPasswords = ['john','1234','bob'];
+
+let userPasswordsHashed = [];
+
+// loops through userPasswords array and hashes each password
+for (let i = 0; i < userPasswords.length; i++) {
+
+  // hash password
+  bcrypt.hash(userPasswords[i], saltRounds, (error, hash) => {
+    if (error) {
+      // if error, console log error
+      console.error("Error hashing password:", error);
+    } else {
+      // if no error, push hashed password to userPasswordsHashed array
+      console.log("Hashed password:", hash);
+      userPasswordsHashed.push(hash);
+
+      if (userPasswordsHashed.length === userPasswords.length) {
+        console.log("userPasswordsHashed:", userPasswordsHashed);
+        // if userPasswordsHashed array is same length as userPasswords array, run SQL statement
+        pool.query(SQLSTATEMENT, userPasswordsHashed, callback);
+      }
+      
+    }
+  });
+}
+
+
 const SQLSTATEMENT = `
 DROP TABLE IF EXISTS User;
 
@@ -30,7 +70,8 @@ CREATE TABLE User (
 user_id INT PRIMARY KEY AUTO_INCREMENT,
 username TEXT,
 email TEXT,
-password TEXT
+password TEXT,
+points INT 
 );
 
 CREATE TABLE Task (
@@ -88,6 +129,7 @@ CREATE TABLE Court (
   winner TEXT NOT NULL
 );
 
+
 INSERT INTO Task (title, description, points) VALUES
 ('Plant a Tree', 'Plant a tree in your neighbourhood or a designated green area.', '50'),
 ('Use Public Transportation', 'Use public transportation or carpool instead of driving alone.', '30'),
@@ -95,8 +137,6 @@ INSERT INTO Task (title, description, points) VALUES
 ('Energy Conservation', 'Turn off lights and appliances when not in use.', '25'),
 ('Composting', 'Start composting kitchen scraps to create natural fertilizer.', '35')
 ;
-
-
 
 INSERT INTO Shop (brand, type, name, atk, def, price) VALUES
 ('Yonex', 'racket', '100zz', 80, 30, 20),
@@ -113,6 +153,11 @@ INSERT INTO Shop (brand, type, name, atk, def, price) VALUES
 ('LiNing', 'racket', 'axf999', 99, 99, 90),
 ('LiNing', 'pants', 'reddisher', 0, 60, 50)
 ;
+
+INSERT INTO User (username,email,password,points) VALUES 
+('John','john@example.com',?,0),
+('Jane','jane@example.com',?,0),
+('a','bob@example.com',?,100);
 
 INSERT INTO Player (name, level, PlayType, partner, specialty, racket, shoe, shirt, pants) VALUES 
 ('adam', 3, 'single', NULL , 'smash', 'axf999', '65z', 'pika', 'reddisher'),
@@ -135,11 +180,5 @@ INSERT INTO Messages (message_text, user_id) VALUES
 
 `;
 
-pool.query(SQLSTATEMENT, (error, results, fields) => {
-  if (error) {
-    console.error("Error creating tables:", error);
-  } else {
-    console.log("Tables created successfully:", results);
-  }
-  process.exit();
-});
+
+// pool.query(SQLSTATEMENT, callback);

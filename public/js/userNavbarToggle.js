@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     class="logo"
 /></a>
 <button
-  class="navbar-toggler"
+  class="navbar-toggler float-end"
   type="button"
   data-bs-toggle="collapse"
   data-bs-target="#navbarNav"
@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 <div class="collapse navbar-collapse" id="navbarNav">
   <ul class="navbar-nav ms-auto">
-    <li class="nav-item border d-flex center rounded-corners" id="pointBox">
-      <p id="pointLabel" class="m-1">10000</p>
+    <li class="nav-item border d-flex center rounded-corners mx-2" id="pointBox">
+      <p id="pointLabel" class="m-1"></p>
       <a href="" class="">
         <img class="coin right" src="https://pngimg.com/uploads/coin/coin_PNG36871.png" alt="Coin PNG image" title="Coin PNG image">
       </a>
@@ -57,12 +57,9 @@ document.addEventListener("DOMContentLoaded", function () {
     <li class="nav-item">
       <a id="loginButton" href="login.html" class="nav-link">Login</a>
     </li>
-    <li>
-      <div class="btn-nav">
-        <a id="registerButton" class="btn text-bg-dark btn-small navbar-btn" href="register.html"
-          >Register!</a
-        >
-      </div>
+    <li class="nav-item">
+        <a id="registerButton" class="nav-link text-bg-dark" href="register.html">Register!</a>
+
     </li>
   </ul>
 </div>
@@ -108,9 +105,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const profileButton = document.getElementById("profileButton");
     const logoutButton = document.getElementById("logoutButton");
     const pointBox = document.getElementById("pointBox")
-  
+    const pointLabel = document.getElementById('pointLabel')
+
+
     // Check if token exists in local storage
     const token = localStorage.getItem("token");
+    const callback = (responseStatus, responseData) => {
+      console.log("responseStatus:", responseStatus);
+      console.log("responseData:", responseData);    
+      pointLabel.innerText=''
+      pointLabel.innerText=`${responseData.points}`
+    }
+    fetchMethod(currentUrl + `/api/users/${-1}`, callback, "GET",null, token);
+
     if (token) {
       // Token exists, show profile button and hide login and register buttons
       loginButton.classList.add("d-none");
@@ -118,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
       profileButton.classList.remove("d-none");
       logoutButton.classList.remove("d-none");
       pointBox.classList.remove('d-none');
+
     } else {
       // Token does not exist, show login and register buttons and hide profile and logout buttons
       loginButton.classList.remove("d-none");

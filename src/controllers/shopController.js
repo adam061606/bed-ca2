@@ -68,7 +68,8 @@ module.exports.createNewItem = (req, res, next) =>
         brand: req.body.brand,
         type: req.body.type,
         atk: req.body.atk,
-        def: req.body.def    
+        def: req.body.def,
+        price: req.body.price   
     }
     const callback = (error, results, fields) => {
         if (error) {

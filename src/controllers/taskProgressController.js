@@ -59,7 +59,12 @@ module.exports.createNewTaskProgress = (req,res,next) => {
         if (error) {
             console.error("Error createNewTaskProgress:", error); 
             res.status(500).json(error);
-        } else res.status(201).json(results[1][0]); //display results
+        } else {
+            console.log(results); //display results
+            res.locals.points = results[1][0].points
+            console.log(`points: ${res.locals.points}`)
+            next()
+        }
     }
     model.createTaskProgress(data,callback)
 }

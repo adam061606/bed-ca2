@@ -72,11 +72,18 @@ document.addEventListener("DOMContentLoaded", function () {
       // Completed Button JS
       const completedTaskButton = document.getElementById(`taskCompleteButton${task_id}`);
 
+      const pointsCallback = (responseStatus, responseData) => {
+        console.log("responseStatus:", responseStatus);
+        console.log("responseData:", responseData);    
+        pointLabel.innerText=''
+        pointLabel.innerText=`${responseData.points}`
+      }
+
       const completeTaskCallback = (responseStatus, responseData) => {
         console.log("responseStatus:", responseStatus);
         console.log("responseData:", responseData);
-        if (responseStatus == 200) {
-          window.location.reload();
+        if (responseStatus == 201) {
+          fetchMethod(currentUrl + `/api/users/${-1}`, pointsCallback, "GET",null, token);
           console.log("Posted into Task Progress!");
         }
       };

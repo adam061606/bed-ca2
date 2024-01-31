@@ -33,8 +33,12 @@ module.exports.createTaskProgress = (data, callback) =>
     const SQLSTATMENT = `
     INSERT INTO TaskProgress (user_id, task_id, notes)
     VALUES (?, ?, ?);
-    SELECT progress_id, user_id, task_id, DATE_FORMAT(completion_date, '%Y-%m-%d') as completion_date, notes
-    FROM TaskProgress WHERE progress_id = LAST_INSERT_ID();
+
+    SELECT *
+    FROM TaskProgress 
+    INNER JOIN Task ON TaskProgress.task_id = Task.task_id
+    WHERE progress_id = LAST_INSERT_ID()
+    ;
     `;
     const VALUES = [data.user_id, data.task_id, data.notes];
 
@@ -74,6 +78,19 @@ module.exports.deleteTaskId = (data, callback) =>
     WHERE progress_id = ?
     `;
     const VALUES = [data.id];
+
+    pool.query(SQLSTATMENT, VALUES, callback);
+}
+
+// update user points
+module.exports.updateUserPoints = (data, callback) =>
+{
+    const SQLSTATMENT = `
+    UPDATE User 
+    SET points = points + ?
+    WHERE user_id = ?
+    `;
+    const VALUES = [data.points, data.user_id];
 
     pool.query(SQLSTATMENT, VALUES, callback);
 }

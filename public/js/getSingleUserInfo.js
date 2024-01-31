@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
 url = new URL(document.URL);
 const urlParams = url.searchParams;
-const userId = urlParams.get("user_id");
+// const userId = urlParams.get("user_id");
 // const userId = res.locals.userId;
+const token = localStorage.getItem("token");
 
 const callbackForUserInfo = (responseStatus, responseData) => {
   console.log("responseStatus:", responseStatus);
@@ -58,6 +59,6 @@ const callbackForUserPlayers = (responseStatus, responseData) => {
   });
 };
 
-fetchMethod(currentUrl + `/api/user/${userId}`, callbackForUserInfo);
-fetchMethod(currentUrl + `/api/user/${userId}/player`, callbackForUserPlayers);
+fetchMethod(currentUrl + `/api/users/${-1}`, callbackForUserInfo,'GET',null, token);
+fetchMethod(currentUrl + `/api/users/${-1}/player`, callbackForUserPlayers);
 });

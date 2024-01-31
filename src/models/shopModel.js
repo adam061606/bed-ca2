@@ -4,10 +4,10 @@ const pool = require('../services/db');
 module.exports.insertItem = (data, callback) =>
 {
     const SQLSTATMENT = `
-    INSERT INTO Shop (brand, type, name, atk, def)
-    VALUES (?, ?, ?, ?, ?);
+    INSERT INTO Shop (brand, type, name, atk, def, price)
+    VALUES (?, ?, ?, ?, ?, ?);
     `;
-    const VALUES = [data.brand, data.type, data.name, data.atk, data.def];
+    const VALUES = [data.brand, data.type, data.name, data.atk, data.def, data.price];
 
     pool.query(SQLSTATMENT, VALUES, callback);
 }

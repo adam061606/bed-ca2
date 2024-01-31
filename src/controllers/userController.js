@@ -1,15 +1,16 @@
 const model = require("../models/userModel");
+const taskProgressModal = require("../models/taskProgressModal")
 
 // check if user ID exists
 module.exports.checkUserID = (req,res,next) => {
-    if (req.params.user_id == undefined ){ 
+    if (res.locals.userId == undefined ){ 
         res.status(400).json({
             message: "Error: user_id is undefined"
         });
         return;
     }
     const data = {
-        user_id : req.params.user_id
+        user_id : res.locals.userId
     }
     const callback = (error, results, fields) => {
         if (error){
@@ -59,7 +60,7 @@ module.exports.getUsers = (req,res,next) => {
 //task 3, get user by id
 module.exports.getTaskProgressByUserID = (req,res,next) => {
     const data = {
-        id: req.params.user_id
+        id: res.locals.userId
     }
     const callback = (error, results, fields) => {
         if (error) {
@@ -80,8 +81,7 @@ module.exports.getTaskProgressByUserID = (req,res,next) => {
 
 module.exports.getUsersByID = (req,res,next) => {
     const data ={
-        id: req.locals.userId,
-        task_id: res.locals.taskID
+        id: res.locals.userId    
     }
     const callback = (error, results, fields) => {
         if (error) {
@@ -89,12 +89,14 @@ module.exports.getUsersByID = (req,res,next) => {
             res.status(500).json(error);
         } 
         else {
-            console.log(results)
+            console.log(`getUsersByID-results: ${results}`)
+            console.log(`points: ${results[0].points}`)
             res.status(200).json({ //display results
-                user_id:results[0][0].user_id,
-                username:results[0][0].username,
-                email:results[0][0].email,
-                total_points: parseInt(results[1][0].total_points) 
+                user_id:results[0].user_id,
+                username:results[0].username,
+                email:results[0].email,
+                points: results[0].points
+                // total_points: parseInt(results[1][0].total_points) 
             }); 
         }
     }
@@ -225,7 +227,34 @@ module.exports.readUserByUsername = (req, res, next) =>
     model.selectUserByUsername(data, callback);
 }
 
+// update points of user 
+module.exports.updatePoints = (req, res, next) =>
+{
+    const data = {
+        points: res.locals.points,
+        user_id: res.locals.userId
+    }
+    console.log(data)
 
+    const callback = (error, results, fields) => {
+        if (error) {
+            console.error("Error updatePoints:", error);
+            res.status(500).json(error);
+        } else {
+            if(results.length == 0) 
+            {
+                res.status(404).json({
+                    message: "User not found"
+                });
+            }
+            else {
+                console.log(results)
+                res.status(201).json(results);}
+        }
+    }
+
+    taskProgressModal.updateUserPoints(data, callback);
+}
 
 //////////////////////////////////////////////////////
 // CONTROLLER FOR LOGIN
