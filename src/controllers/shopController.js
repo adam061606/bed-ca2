@@ -209,3 +209,33 @@ module.exports.deleteItemById = (req, res, next) =>
 
     model.deleteItemById(data, callback);
 }
+
+// deduct points 
+module.exports.userBuyItem = (req, res, next) =>
+{
+    const data = {
+        price: req.body.price,
+        user_id: res.locals.userId
+    }
+    console.log(data)
+
+    const callback = (error, results, fields) => {
+        if (error) {
+            console.error("Error userBuyItem:", error);
+            res.status(500).json(error);
+        } else {
+            if(results.length == 0) 
+            {
+                console.log('result length is 0')
+                res.status(404).json({
+                    message: "User not found"
+                });
+            }
+            else {
+                console.log(results)
+                res.status(201).json(results);}
+        }
+    }
+
+    model.deductPoints(data, callback);
+}

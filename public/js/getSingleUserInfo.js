@@ -60,5 +60,5 @@ const callbackForUserPlayers = (responseStatus, responseData) => {
 };
 
 fetchMethod(currentUrl + `/api/users/${-1}`, callbackForUserInfo,'GET',null, token);
-fetchMethod(currentUrl + `/api/users/${-1}/player`, callbackForUserPlayers);
+// fetchMethod(currentUrl + `/api/users/${-1}/player`, callbackForUserPlayers);
 });

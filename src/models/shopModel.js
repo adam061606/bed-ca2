@@ -94,3 +94,17 @@ module.exports.deleteItemById = (data, callback) =>
 
     pool.query(SQLSTATMENT, VALUES, callback);
 }     // ALTER TABLE Player AUTO_INCREMENT = 1;
+
+
+// deduct points from user 
+module.exports.deductPoints = (data,callback) =>
+{
+    const SQLSTATMENT = `
+    UPDATE User 
+    SET points = points - ?
+    WHERE user_id = ?
+    `;
+    const VALUES = [data.price, data.user_id];
+
+    pool.query(SQLSTATMENT, VALUES, callback);
+}

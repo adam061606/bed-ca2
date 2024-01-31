@@ -14,6 +14,9 @@ router.delete("/:id",jwtMiddleware.verifyToken,controller.checkItemID, controlle
 
 
 
+// CA2
+router.put('/:user_id/buy',jwtMiddleware.verifyToken, controller.userBuyItem) // task 5
+
 
 
 module.exports = router;
