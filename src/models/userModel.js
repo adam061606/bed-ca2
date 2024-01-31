@@ -4,8 +4,8 @@ const pool = require('../services/db');
 module.exports.createUser = (data, callback) =>
 {
     const SQLSTATMENT = `
-    INSERT INTO User (username, email, password)
-    VALUES (?, ?, ?);
+    INSERT INTO User (username, email, password, points)
+    VALUES (?, ?, ?, 0);
 
     SELECT * FROM User 
     WHERE user_id = LAST_INSERT_ID();

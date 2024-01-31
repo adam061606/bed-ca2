@@ -12,7 +12,7 @@ const callback = (error, results, fields) => {
   process.exit();
 }
 
-const userPasswords = ['john','1234','bob'];
+const userPasswords = ['123','abc','c'];
 
 let userPasswordsHashed = [];
 
@@ -78,7 +78,7 @@ CREATE TABLE Task (
 task_id INT PRIMARY KEY AUTO_INCREMENT,
 title TEXT,
 description TEXT,
-points INT
+points INT DEFAULT 0
 );
 
 CREATE TABLE TaskProgress (
