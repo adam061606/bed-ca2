@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const token = localStorage.getItem('token')
     const callback = (responseStatus, responseData) => {
       console.log("responseStatus:", responseStatus);
       console.log("responseData:", responseData);
@@ -16,11 +17,31 @@ document.addEventListener("DOMContentLoaded", function () {
                       Level: ${player.level}
                   </p>
                   <a href="getSinglePlayerInfo.html?player_id=${player.id}" class="btn btn-primary">View Details</a>
+                  <a href="editSinglePlayerInfo.html?player_id=${player.id}" class="btn btn-success mt-3">Edit Details</a>
+                  <button type='button' class="btn btn-danger mt-3" id='deletePlayer${player.id}'>Delete</button>
+
               </div>
           </div>
           `;
         playerList.appendChild(displayItem);
+
+        const deletePlayer = document.getElementById(`deletePlayer${player.id}`)
+        deletePlayer.addEventListener('click', (e) => {
+          console.log(deletePlayer)
+          e.preventDefault();
+          const id = player.id
+          const callback = (responseStatus, responseData) => {
+            console.log("responseStatus:", responseStatus);
+            console.log("responseData:", responseData);
+            if (responseStatus == 204) {
+              window.location.reload();
+              console.log(`Deleted player ${id}`);
+            }
+          };
+          fetchMethod(currentUrl + `/api/player/${id}`, callback, "DELETE", null, token);
+        })
       });
+
     };
   
     fetchMethod(currentUrl + "/api/player", callback);

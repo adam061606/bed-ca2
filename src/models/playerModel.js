@@ -51,10 +51,10 @@ module.exports.updateById = (data, callback) =>
 {
     const SQLSTATMENT = `
     UPDATE Player 
-    SET name = ?, level = ?, PlayType = ?, partner = ?, specialty = ?, racket = ?, shoe = ?, shirt = ?, pants = ?
+    SET name = ?, level = ?, specialty = ?, racket = ?, shoe = ?, shirt = ?, pants = ?
     WHERE id = ?;
     `;
-    const VALUES = [data.name, data.level, data.PlayType, data.partner, data.specialty, data.racket, data.shoe, data.shirt, data.pants, data.id];
+    const VALUES = [data.name, data.level, data.specialty, data.racket, data.shoe, data.shirt, data.pants, data.id];
 
     pool.query(SQLSTATMENT, VALUES, callback);
 }
