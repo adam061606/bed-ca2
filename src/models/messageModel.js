@@ -1,13 +1,19 @@
 const pool = require('../services/db');
 
-module.exports.selectAll = (callback) =>
+module.exports.selectAll = (data, callback) =>
 {
     const SQLSTATMENT = `
-    SELECT * from Messages 
-    INNER JOIN user ON user.user_id = Messages.user_id;
+    SELECT Messages.id, Messages.message_text, User.user_id, User.username, Messages.created_at , IF(User.user_id = ?,TRUE,FALSE) AS own_message FROM Messages
+    INNER JOIN User ON Messages.user_id = User.user_id
+    ORDER BY Messages.created_at;
     `;
 
-    pool.query(SQLSTATMENT, callback);
+    const VALUES = [data.id];
+
+    // SELECT * from Messages 
+    // INNER JOIN user ON user.user_id = Messages.user_id;
+
+    pool.query(SQLSTATMENT,VALUES, callback);
 }
 
 module.exports.selectById = (data, callback) =>

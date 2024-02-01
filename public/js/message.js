@@ -64,57 +64,78 @@ function loadMessage(){
     responseData.forEach((Text) => {
       const displayItem = document.createElement("div");
       displayItem.className = "col-xl-10";
-      displayItem.innerHTML = `
-      <div class="message" data-message-id="${Text.id}" data-user-id="${Text.user_id}" data-text="${Text.message_text}">
-                    <div class="row">
-                        <div class="col-lg-10 d-flex align-items-center text-wrap">
-                            <p class="my-0 me-3 w-100 text-break" style="font-size: 2.0vh">${Text.username}</p>
-                            <span class="text-muted" style="font-size: 1.3vh">${Text.created_at}</span>
-                        </div>
-                        <div class="col-lg-2 btn-group dropstart">
-                          <button type="button" class="btn btn-secondary dropdown-toggle bg-transparent border-0" style="color:#696969" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-ellipsis-vertical"></i>                            
-                          </button>
-                          <ul class="dropdown-menu">
-                          <li><button class="dropdown-item" data-message-id="${Text.id}" data-user-id="${Text.user_id}" data-text="${Text.message_text}" onClick="showEditModal(this)">Edit</button></li>
-                          <li><a class="dropdown-item" id="deleteButton${Text.id}" href="#">Delete</a></li>
-                          </ul>
-                        </div>
-                    </div>
-                    <div class="row messageText">
-                        <p class="text-break border-3 bg-white rounded py-2 ">${Text.message_text}</p>
-                    </div>
+      if (Text.own_message == 1){ // your own message
+        displayItem.innerHTML = `
+        <div class="message" data-message-id="${Text.id}" data-user-id="${Text.user_id}" data-text="${Text.message_text}">
+                      <div class="row">
+                          <div class="col-lg-10 d-flex align-items-center text-wrap">
+                              <p class="my-0 me-3 w-100 text-break" style="font-size: 2.0vh">${Text.username}</p>
+                              <span class="text-muted" style="font-size: 1.3vh">${Text.created_at}</span>
+                          </div>
+                          <div class="col-lg-2 btn-group dropstart">
+                            <button type="button" class="btn btn-secondary dropdown-toggle bg-transparent border-0" style="color:#696969" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i class="fa-solid fa-ellipsis-vertical"></i>                            
+                            </button>
+                            <ul class="dropdown-menu">
+                            <li><button class="dropdown-item" data-message-id="${Text.id}" data-user-id="${Text.user_id}" data-text="${Text.message_text}" onClick="showEditModal(this)">Edit</button></li>
+                            <li><a class="dropdown-item" id="deleteButton${Text.id}" href="#">Delete</a></li>
+                            </ul>
+                          </div>
+                      </div>
+                      <div class="row messageText">
+                          <p class="text-break border-3 rounded py-2 text-light" style="background: #5A5EB9;">${Text.message_text}</p>
+                      </div>
+  
+                  </div>
+          `;
+        chatLog.appendChild(displayItem);
 
-                </div>
-        `;
-      chatLog.appendChild(displayItem);
+              // delete message
+        const TextId = Text.id;
+        const deleteMessageById = document.getElementById(`deleteButton${TextId}`);
 
-      // delete message
-      const TextId = Text.id;
-      const deleteMessageById = document.getElementById(`deleteButton${TextId}`);
+        const deleteCallback = (responseStatus, responseData) => {
+          console.log("responseStatus:", responseStatus);
+          console.log("responseData:", responseData);
+          loadMessage()
+          if (responseStatus == 204) {
+            window.location.reload();
+            console.log(`Deleted message with id-${TextId}`);
+            
+          }
+        };
 
-      const deleteCallback = (responseStatus, responseData) => {
-        console.log("responseStatus:", responseStatus);
-        console.log("responseData:", responseData);
-        loadMessage()
-        if (responseStatus == 204) {
-          window.location.reload();
-          console.log(`Deleted message with id-${TextId}`);
+        deleteMessageById.addEventListener("click", (event) => {
+          event.preventDefault();
+
+          fetchMethod(currentUrl + `/api/messages/${TextId}`,deleteCallback,"DELETE",null,token);
           
-        }
-      };
+        });
+    
+      } else if (Text.own_message == 0){ // not your message
+        displayItem.innerHTML = `
+        <div class="message" data-message-id="${Text.id}" data-user-id="${Text.user_id}" data-text="${Text.message_text}">
+                      <div class="row">
+                          <div class="col-lg-10 d-flex align-items-center text-wrap">
+                              <p class="my-0 me-3 w-100 text-break" style="font-size: 2.0vh">${Text.username}</p>
+                              <span class="text-muted" style="font-size: 1.3vh">${Text.created_at}</span>
+                          </div>
+                      </div>
+                      <div class="row messageText">
+                          <p class="text-break border-3 bg-white rounded py-2 ">${Text.message_text}</p>
+                      </div>
+  
+                  </div>
+          `;
+        chatLog.appendChild(displayItem);
+      }
 
-      deleteMessageById.addEventListener("click", (event) => {
-        event.preventDefault();
 
-        fetchMethod(currentUrl + `/api/messages/${TextId}`,deleteCallback,"DELETE",null,token);
-        
-      });
 
 
     });
   }
-  fetchMethod(currentUrl + "/api/messages", callback);
+  fetchMethod(currentUrl + "/api/messages", callback, 'GET', null, token);
 
 
 }

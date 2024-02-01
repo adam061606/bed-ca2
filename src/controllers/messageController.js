@@ -52,6 +52,9 @@ module.exports.readMessageById = (req, res, next) => {
 }
 
 module.exports.readAllMessage = (req, res, next) => {
+    const data = {
+        id: res.locals.userId
+    }
     const callback = (error, results, fields) => {
         if (error) {
             console.error("Error readAllMessage:", error);
@@ -61,7 +64,7 @@ module.exports.readAllMessage = (req, res, next) => {
         }
     }
 
-    model.selectAll(callback);
+    model.selectAll(data, callback);
 }
 
 module.exports.updateMessageById = (req, res, next) => {
