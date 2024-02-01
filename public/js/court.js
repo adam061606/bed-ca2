@@ -20,9 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // add options into select form 
         floatingSelectPlayer1.appendChild(displayItem.cloneNode(true));
-        console.log("test")
         floatingSelectPlayer2.appendChild(displayItem.cloneNode(true));
-        console.log("test1")
 
         }); 
 
@@ -43,12 +41,12 @@ function selectedPlayer(e){
         a = Math.floor(Math.random() * 5) + 1;
 
         if (e.dataset.playerId == 1) {
-
             playerStats = document.getElementById('playerStats1')
         }
         else {  
             playerStats = document.getElementById('playerStats2')
         }
+        
         playerStats.innerHTML = ``
 
         const displayItem = document.createElement("div"); // load 3 random items
@@ -86,6 +84,13 @@ function challenge(){
     const player2Id = document.getElementById("floatingSelectPlayer2").value;
     console.log(player1Id)
     console.log(player2Id)
+
+
+    const resultModal = new bootstrap.Modal(document.getElementById('resultModal'), {})
+
+    const challengeModalLabel = document.getElementById("challengeModalLabel");
+
+    
     const callback = (responseStatus, responseData) => {
         console.log("responseStatus:", responseStatus);
         console.log("responseData:", responseData);
@@ -95,33 +100,38 @@ function challenge(){
             return;
         }
 
-        if (responseStatus == 204){ // game created successfully
-            // show result modal 
-
-            // do this tmr 
-            
-            const resultModal = document.getElementById("resultModal");
-            resultModal.style.display = "block";
-            resultModal.innerHTML = `
-            <div class="modal-dialog model-dialog-centered">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Result</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5 class="modal-title" id="exampleModalLabel">${responseData.message}</h5>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-            </div>
-            </div>
-            `;
+        if (responseStatus == 409){
+            challengeModalLabel.innerText = `${responseData.message}`
+            challengeModalLabel.className = 'd-flex mx-auto h2'
+            resultModal.show()
         }
- 
+
+        if (responseStatus == 200){ // game created successfully
+            // show result modal            
+            const courtInsertId = responseData.insertId || responseData[0].insertId
+
+            const courtCallback = (responseStatus, responseData) => {
+                console.log("responseStatus:", responseStatus);
+                console.log("responseData:", responseData);
+     
+
+                challengeModalLabel.className = 'd-flex mx-auto h2'
+                if (responseData.winner == "Draw"){
+                    challengeModalLabel.innerText = `Its a DRAW!`
+                }
+                else if (responseData.winner == responseData.player1){
+                    challengeModalLabel.innerText = `PLAYER 1 WON!`
+                } 
+                else if (responseData.winner == responseData.player2){
+                    challengeModalLabel.innerText = `PLAYER 2 WON!`
+                }
+                resultModal.show()
+
+            }
+            fetchMethod(currentUrl + `/api/court/${courtInsertId}`, courtCallback, "GET", null, token);
+
+        }
     }
     fetchMethod(currentUrl + `/api/court/${player1Id}/${player2Id}`, callback, "POST", null, token);
+
 }

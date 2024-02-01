@@ -42,7 +42,7 @@ footer{
     height: 48px;
 }
 
-.dropend .dropdown-toggle::after {
+.dropstart .dropdown-toggle::before {
     display: none;
 }
 

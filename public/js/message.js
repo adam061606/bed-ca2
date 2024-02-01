@@ -71,7 +71,7 @@ function loadMessage(){
                             <p class="my-0 me-3 w-100 text-break" style="font-size: 2.0vh">${Text.username}</p>
                             <span class="text-muted" style="font-size: 1.3vh">${Text.created_at}</span>
                         </div>
-                        <div class="col-lg-2 btn-group dropend">
+                        <div class="col-lg-2 btn-group dropstart">
                           <button type="button" class="btn btn-secondary dropdown-toggle bg-transparent border-0" style="color:#696969" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-ellipsis-vertical"></i>                            
                           </button>
@@ -96,9 +96,11 @@ function loadMessage(){
       const deleteCallback = (responseStatus, responseData) => {
         console.log("responseStatus:", responseStatus);
         console.log("responseData:", responseData);
+        loadMessage()
         if (responseStatus == 204) {
           window.location.reload();
           console.log(`Deleted message with id-${TextId}`);
+          
         }
       };
 
@@ -106,7 +108,7 @@ function loadMessage(){
         event.preventDefault();
 
         fetchMethod(currentUrl + `/api/messages/${TextId}`,deleteCallback,"DELETE",null,token);
-        loadMessage()
+        
       });
 
 
@@ -134,10 +136,7 @@ function showEditModal(e) {
   const editCallback = (responseStatus, responseData) => {
     console.log("responseStatus:", responseStatus);
     console.log("responseData:", responseData);
-    // if (responseData == 400){
-    //   fetchMethod(currentUrl + `/api/messages/${textId}`,deleteCallback,"DELETE",null,token);
-    // }
-    // else 
+ 
     if (responseStatus == 200) {
       editModal.hide()
       console.log(`edited message with id-${e.dataset.messaegeId}`);

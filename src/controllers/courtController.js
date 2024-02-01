@@ -182,7 +182,7 @@ module.exports.addCourtGame = (req,res,next) => {
                 console.error("Error addCourtGame (single):", error);
                 res.status(500).json(error);
             } else {
-                res.status(204).send()
+                res.status(200).send(results)
                 }
             }
         // singles player 1 won
@@ -217,7 +217,7 @@ module.exports.addCourtGame = (req,res,next) => {
                 console.error("Error addCourtGame (double):", error);
                 res.status(500).json(error);
             } else {
-                res.status(204).send()
+                res.status(200).send(results)
                 }
             }
         
